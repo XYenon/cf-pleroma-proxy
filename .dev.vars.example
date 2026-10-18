@@ -1,0 +1,3 @@
+# Local development only. Copy to .dev.vars and set your Pleroma endpoint secret.
+# Never commit .dev.vars or a real secret_key_base.
+SECRET_KEY_BASE="replace-with-your-pleroma-secret-key-base"

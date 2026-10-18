@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$repo_root"
+
+# Nix is preinstalled in the orb base image. Keep the flake's toolchain rooted
+# so it survives garbage collection as well as project snapshots.
+mkdir -p .direnv
+echo 'Preparing the locked Nix development environment...'
+time nix --extra-experimental-features 'nix-command flakes' print-dev-env \
+	--no-update-lock-file --profile "$repo_root/.direnv/orb-profile" > /dev/null
+
+# Amp and supervised services start in separate login shells. Export the whole
+# development environment there, including compiler paths and build variables.
+profile_marker="# cf-pleroma-proxy orb environment: $repo_root"
+if ! grep -Fqx "$profile_marker" "$HOME/.bash_profile" 2>/dev/null; then
+	printf -v quoted_root '%q' "$repo_root"
+	printf -v quoted_nix '%q' "$(command -v nix)"
+	cat >> "$HOME/.bash_profile" <<EOF
+
+$profile_marker
+if [[ -z "\${IN_NIX_SHELL:-}" && ( "\$PWD" == $quoted_root || "\$PWD" == $quoted_root/* ) ]]; then
+	eval "\$($quoted_nix --extra-experimental-features 'nix-command flakes' print-dev-env --no-update-lock-file $quoted_root)"
+fi
+EOF
+fi
+
+echo 'Installing dependencies from pnpm-lock.yaml...'
+# Re-enter the current flake even if setup inherited an older snapshot's shell.
+time env -u IN_NIX_SHELL /bin/bash -lc 'set -euo pipefail; node --version; pnpm --version; pnpm install --frozen-lockfile'

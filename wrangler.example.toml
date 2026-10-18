@@ -1,0 +1,24 @@
+name = "cf-pleroma-proxy"
+main = "src/index.ts"
+compatibility_date = "2026-10-18"
+workers_dev = false
+routes = [{ pattern = "social.example.org/proxy/*", zone_name = "example.org" }]
+
+# Serve cached responses without running the Worker. Requires Wrangler 4.69.0 or later.
+[cache]
+enabled = true
+
+[vars]
+USER_AGENT = "PleromaMediaProxy; https://social.example.org <admin@example.org>"
+# Non-preview direct fetch failures: pleroma, error.
+MEDIA_FALLBACK = "pleroma"
+# Preview processing: worker, pleroma, original.
+PREVIEW_MODE = "worker"
+# Worker preview failures: pleroma, original, error.
+PREVIEW_FALLBACK = "pleroma"
+
+[images]
+binding = "IMAGES"
+
+[media]
+binding = "MEDIA"

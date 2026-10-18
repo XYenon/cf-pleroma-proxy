@@ -1,0 +1,43 @@
+{
+	"name": "cf-pleroma-proxy",
+	"version": "0.1.0",
+	"description": "A Cloudflare Worker for Pleroma's signed media proxy URLs and previews.",
+	"license": "AGPL-3.0-or-later",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/XYenon/cf-pleroma-proxy.git"
+	},
+	"bugs": {
+		"url": "https://github.com/XYenon/cf-pleroma-proxy/issues"
+	},
+	"homepage": "https://github.com/XYenon/cf-pleroma-proxy#readme",
+	"private": true,
+	"type": "module",
+	"engines": {
+		"node": ">=26",
+		"pnpm": ">=12"
+	},
+	"scripts": {
+		"build": "wrangler deploy --dry-run",
+		"check": "biome ci --error-on-warnings . && prettier --check \"**/*.{md,yaml,yml}\" && pnpm run typecheck",
+		"deploy": "wrangler deploy",
+		"dev": "wrangler dev",
+		"format": "biome format --write . && prettier --write \"**/*.{md,yaml,yml}\"",
+		"format:check": "biome format . && prettier --check \"**/*.{md,yaml,yml}\"",
+		"lint": "biome lint --error-on-warnings .",
+		"lint:fix": "biome check --write --error-on-warnings .",
+		"start": "wrangler dev",
+		"test": "node --test test/*.test.ts",
+		"typecheck": "pnpm run typegen && tsc",
+		"typegen": "wrangler types worker-runtime.d.ts --config wrangler.example.toml --include-env=false"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "2.5.15",
+		"@types/node": "^26.6.5",
+		"node-addon-api": "^8.9.2",
+		"node-gyp": "^13.1.0",
+		"prettier": "3.9.10",
+		"typescript": "^7.0.2",
+		"wrangler": "^4.151.1"
+	}
+}

@@ -1,0 +1,15 @@
+# Biome owns code and JSON formatting. Prettier handles documentation and YAML.
+**/*
+!**/
+!**/*.md
+!**/*.yaml
+!**/*.yml
+
+.amp/
+.direnv/
+.git/
+.wrangler/
+node_modules/
+dist/
+coverage/
+pnpm-lock.yaml

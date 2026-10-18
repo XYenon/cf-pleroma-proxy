@@ -1,0 +1,31 @@
+# Dependencies and build output
+node_modules/
+dist/
+coverage/
+*.tsbuildinfo
+worker-runtime.d.ts
+
+# Logs and diagnostic reports
+*.log
+report.*.json
+
+# Local credentials, including per-environment Wrangler files
+.env
+.env.*
+!.env.example
+.dev.vars
+.dev.vars.*
+!.dev.vars.example
+
+# Wrangler, Nix and orb local state
+wrangler.toml
+.wrangler/
+.direnv/
+.amp/in/
+.amp/portals/
+
+# Editor and operating system files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
