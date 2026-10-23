@@ -32,7 +32,7 @@
 		"typegen": "wrangler types worker-runtime.d.ts --config wrangler.example.toml --include-env=false"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.5.15",
+		"@biomejs/biome": "2.6.2",
 		"@types/node": "^26.6.5",
 		"node-addon-api": "^8.9.2",
 		"node-gyp": "^13.1.0",
