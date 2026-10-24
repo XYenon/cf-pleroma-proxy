@@ -4,7 +4,8 @@
 		"config:recommended",
 		"group:allNonMajor",
 		":automergeStableNonMajor",
-		":configMigration"
+		":configMigration",
+		"customManagers:biomeVersions"
 	],
 	"minimumReleaseAge": "1 day"
 }
